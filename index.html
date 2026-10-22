@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jasmine’s Poultry – Healthy Chickens</title>
+<style>
+:root{--bg:#f6f1ea;--card:#fff;--ink:#2b211b;--mut:#6f625a;--line:#e6dccf;--brand:#8b3e0c;--brand2:#6e300b;--acc:#f5b43c;--ok:#1f7a4d;--danger:#b3261e;--soft:#fdf0d8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1410;--card:#261d17;--ink:#f3e9df;--mut:#b5a698;--line:#3b2e25;--brand:#c2631f;--brand2:#a2511a;--soft:#33261a;--ok:#5cc690;--danger:#ff8a80}}
+:root[data-theme="dark"]{--bg:#1a1410;--card:#261d17;--ink:#f3e9df;--mut:#b5a698;--line:#3b2e25;--brand:#c2631f;--brand2:#a2511a;--soft:#33261a;--ok:#5cc690;--danger:#ff8a80}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--brand);z-index:60}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer;border:0}
+.wrap{max-width:1150px;margin:auto;padding:0 18px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--brand);color:#fff}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;max-width:1150px;margin:auto}
+.logo{font:700 21px Georgia,serif;cursor:pointer;display:flex;gap:8px;align-items:center;background:none;color:#fff}
+.logo b{color:#ffe0a3}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:none;color:#f3dcc6;padding:7px 12px;border-radius:8px;font-weight:600;font-size:14px}
+nav button.on,nav button:hover{background:rgba(255,255,255,.18);color:#fff}
+.cartbtn{background:var(--acc);color:#2b1a05;padding:8px 14px;border-radius:10px;font-weight:700;white-space:nowrap}
+.hero{background:linear-gradient(135deg,var(--brand),#5a2606);color:#fff;text-align:center;padding:64px 18px 72px}
+.hero h1{font-size:clamp(30px,6vw,54px);font-weight:500}.hero h1 i{color:#ffe0a3}
+.hero p{max-width:560px;margin:16px auto 24px;color:#f6e3cf}
+.btn{padding:11px 20px;border-radius:12px;font-weight:700;font-size:14px}
+.btn.p{background:var(--acc);color:#2b1a05}.btn.s{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.4)}
+.btn.b{background:var(--brand);color:#fff}.btn.o{background:transparent;border:1.5px solid var(--brand);color:var(--brand)}
+.btn.b:hover{background:var(--brand2)}
+.sec{padding:40px 0}.sec h2{font-size:28px;margin-bottom:6px}.sub{color:var(--mut);margin:0 0 22px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.cats{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center;cursor:pointer;transition:.15s;color:var(--ink)}
+.cat:hover{transform:translateY(-3px);border-color:var(--brand)}.cat .e{font-size:38px}.cat h3{font-size:18px;margin:8px 0 2px}.cat small{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.pic{height:190px;display:grid;place-items:center;font-size:72px;position:relative;overflow:hidden}.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.pv{width:100%;max-height:140px;object-fit:cover;border-radius:10px;margin-top:6px}
+.tag{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.72);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:7px}
+.price{position:absolute;top:10px;right:10px;background:var(--acc);color:#2b1a05;font-weight:800;font-size:13px;padding:3px 10px;border-radius:7px}
+.cb{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:7px}
+.breed{font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--brand);background:var(--soft);padding:2px 8px;border-radius:5px;align-self:flex-start}
+.cb h3{font-size:17px}.cb p{margin:0;color:var(--mut);font-size:13px}
+.meta{display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
+.ok{color:var(--ok);font-weight:700}.low{color:#c77700;font-weight:700}.out{color:var(--danger);font-weight:700}
+.act{display:flex;gap:8px;padding:0 16px 16px}.act .btn{flex:1}.act .ic{flex:0;background:var(--soft);color:var(--ink);padding:11px 14px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+.chip{background:var(--card);border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+input,select,textarea{font:inherit;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:99px 12px;width:100%}
+.tools input{flex:1;min-width:160px;width:auto}.tools select{width:auto}
+.feat{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.feat div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}.feat span{font-size:28px}.feat h3{font-size:17px;margin:6px 0 4px}.feat p{margin:0;color:var(--mut);font-size:13px}
+.band{background:var(--soft);border-block:1px solid var(--line)}
+footer{background:#1c0e06;color:#d9c3ab;padding:34px 0;font-size:13px;margin-top:30px}
+footer .wrap{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}footer h3{color:#fff;font-size:15px;margin-bottom:6px}footer p{margin:2px 0}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:70;display:none;align-items:center;justify-content:center;padding:16px}
+.ov.show{display:flex}.ov.side{justify-content:flex-end;padding:0;align-items:stretch}
+.box{background:var(--card);border-radius:16px;max-width:440px;width:100%;max-height:92vh;overflow:auto;padding:22px}
+.side .box{border-radius:0;height:100%;max-height:none;display:flex;flex-direction:column}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.x{background:none;font-size:22px;color:var(--mut)}
+.ci{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}
+.ci .t{font-size:30px}.qty{display:flex;gap:8px;align-items:center}.qty button{width:26px;height:26px;border-radius:7px;background:var(--soft);color:var(--ink);font-weight:700}
+.f{display:grid;gap:10px}.f label{font-size:12px;font-weight:700;display:block;margin-bottom:3px}.f .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stats{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}.stat b{display:block;font:700 26px Georgia,serif;color:var(--brand)}.stat span{font-size:12px;color:var(--mut)}
+.tw{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:620px}th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line)}th{background:var(--soft);font-size:12px}
+td button{padding:5px 10px;border-radius:7px;background:var(--soft);color:var(--ink);margin-right:4px}td button.d{color:var(--danger)}
+td input{width:80px;padding:5px 8px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand2);color:#fff;padding:11px 20px;border-radius:12px;z-index:90;display:none;font-weight:600;font-size:14px;max-width:90vw}
+.hide{display:none!important}
+@media(max-width:640px){.bar{flex-wrap:wrap}nav{order:3;width:100%;justify-content:space-between}.hero{padding:44px 16px 52px}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+ <button class="logo" onclick="go('home')">🐔 <span>Jasmine’s <b>Poultry</b></span></button>
+ <nav id="nav"></nav>
+ <button class="cartbtn" onclick="openCart()">🛒 Cart <span id="cc">0</span></button>
+</div></header>
+
+<main id="main"></main>
+
+<footer><div class="wrap">
+ <div><h3>🐔 Jasmine’s Poultry</h3><p>Healthy, vaccinated chickens raised for high egg production and breeding.</p></div>
+ <div><h3>Visit Us</h3><p>Poultry Farm Road, Davao City, Philippines</p></div>
+ <div><h3>Hours</h3><p>Mon–Fri 6:00 AM – 6:00 PM</p><p>Sat 6:00 AM – 5:00 PM</p><p>Sun 7:00 AM – 3:00 PM</p></div>
+ <div><h3>Contact</h3><p>+63 912 345 6789</p><p>info@jasminespoultry.ph</p></div>
+</div></footer>
+
+<div class="ov" id="ov"><div class="box" id="box"></div></div>
+<div id="toast"></div>
+
+<script>
+const CATS=[{k:'4',n:'4 Months Old',e:'🐥',d:'Starter pullets & growers'},{k:'5',n:'5 Months Old',e:'🐤',d:'Ready-to-lay birds'},{k:'6',n:'6 Months & Older',e:'🐔',d:'Layers & breeding pairs'}];
+const COL={'4':'#fde7c4','5':'#fbd9b0','6':'#f3c6a0'};
+const SEED=[
+{id:'p1',name:'RIR Starter Pullet',cat:'4',breed:'Rhode Island Red',price:350,stock:45,weight:'1.2–1.5 kg',desc:'Healthy, well-feathered and active pullet. Great starter chicken for egg production.',health:'Vaccinated: NDV, Marek’s, Avian Pox',eggs:'250–280 brown eggs/year',em:'🐓'},
+{id:'p2',name:'Black Australorp Grower',cat:'4',breed:'Black Australorp',price:380,stock:30,weight:'1.3–1.6 kg',desc:'Hardy with a docile temperament and excellent foraging ability.',health:'Dewormed & vaccinated',eggs:'280+ eggs/year',em:'🐥'},
+{id:'p3',name:'Ready-To-Lay Sussex',cat:'5',breed:'Light Sussex',price:480,stock:22,weight:'1.8–2.1 kg',desc:'Nearing point of lay with a developing comb. Robust dual-purpose bird.',health:'Dewormed, booster shots complete',eggs:'~260 cream/tinted eggs/year',em:'🐤'},
+{id:'p4',name:'Dominant CZ Point-Of-Lay',cat:'5',breed:'Dominant CZ Hybrid',price:520,stock:4,weight:'1.9–2.2 kg',desc:'Premium layer adapted to warm tropical climates; expected to start laying in 2–3 weeks.',health:'Fully conditioned & dewormed',eggs:'~300 large brown eggs/year',em:'🐔'},
+{id:'p5',name:'Heritage Breeding Pair',cat:'6',breed:'Heritage Dual Purpose',price:1100,stock:8,weight:'Cock 3.2 kg · Hen 2.5 kg',desc:'One rooster and one hen with excellent fertility, ideal for starter hatcheries.',health:'Breeder conditioned, vaccinated',eggs:'Active layers, high fertility',em:'🐓'},
+{id:'p6',name:'Active Laying Hen',cat:'6',breed:'Leghorn Cross',price:580,stock:25,weight:'2.0 kg',desc:'Mature 7-month-old hen producing eggs daily. Ideal for immediate egg harvest.',health:'Peak productivity, fully vaccinated',eggs:'Currently laying daily',em:'🐔'}];
+let P=[],cart=[],view='home',filter='all',q='',sort='feat',admin=false,editId=null;
+try{P=JSON.parse(localStorage.getItem('jp_products')||'null')||SEED}catch(e){P=SEED}
+const save=()=>{try{localStorage.setItem('jp_products',JSON.stringify(P))}catch(e){}};
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const peso=n=>'₱'+Number(n).toLocaleString();
+const cn=k=>CATS.find(c=>c.k===k)?.n||'';
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',2600)}
+function go(v){view=v;if(v==='admin'&&!admin){const p=prompt('Admin password (demo: admin123)');if(p!=='admin123'){if(p!==null)toast('Incorrect password');view='home'}else admin=true}
+ render();scrollTo(0,0)}
+function shop(k){filter=k;go('shop')}
+function stockTxt(s){return s<=0?'<span class="out">Sold out</span>':s<=5?`<span class="low">Only ${s} left</span>`:`<span class="ok">${s} in stock</span>`}
+function cardH(p){return `<div class="card"><div class="pic" style="background:${COL[p.cat]}">${p.img?`<img src="${p.img}" alt="${esc(p.name)}" loading="lazy">`:(p.em||'🐔')}<span class="tag">${cn(p.cat)}</span><span class="price">${peso(p.price)}</span></div>
+<div class="cb"><span class="breed">${esc(p.breed).toUpperCase()}</span><h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p>
+<div class="meta"><span>⚖️ ${esc(p.weight)}</span>${stockTxt(p.stock)}</div></div>
+<div class="act"><button class="btn ic" title="Details" onclick="detail('${p.id}')">ℹ️</button><button class="btn b" ${p.stock<=0?'disabled style="opacity:.5"':''} onclick="add('${p.id}')">Add to Order</button></div></div>`}
+function render(){
+ $('#nav').innerHTML=[['home','Home'],['shop','Chickens'],['about','About'],['admin','Admin']].map(([k,n])=>`<button class="${view===k?'on':''}" onclick="go('${k}')">${n}</button>`).join('');
+ $('#cc').textContent=cart.reduce((a,c)=>a+c.q,0);
+ const m=$('#main');
+ if(view==='home')m.innerHTML=`<section class="hero"><h1>Quality &amp;<br><i>Healthy Chickens</i></h1><p>Vaccinated, high-yield breeds raised naturally for egg laying and breeding. Reserve online, pick up on your schedule.</p>
+ <button class="btn p" onclick="go('shop')">Browse Chickens</button> <button class="btn s" onclick="openCart()">Place Pre-Order</button></section>
+ <div class="wrap"><section class="sec"><h2>Shop by Age</h2><p class="sub">Choose the growth stage that fits your farm.</p><div class="grid cats">${CATS.map(c=>`<button class="cat" onclick="shop('${c.k}')"><div class="e">${c.e}</div><h3>${c.n}</h3><small>${c.d} · ${P.filter(p=>p.cat===c.k).length} listings</small></button>`).join('')}</div></section>
+ <section class="sec" style="padding-top:0"><h2>Featured Chickens</h2><p class="sub">Our most popular birds right now.</p><div class="grid">${P.filter(p=>p.stock>0).slice(0,3).map(cardH).join('')}</div></section></div>
+ <div class="band"><div class="wrap sec"><h2>Why Jasmine’s Poultry?</h2><p class="sub"></p><div class="feat">
+ <div><span>💉</span><h3>Healthy &amp; Vaccinated</h3><p>Complete vaccine routines and vitamins for every bird.</p></div>
+ <div><span>🥚</span><h3>High-Yield Breeds</h3><p>Selected for egg productivity and tropical adaptation.</p></div>
+ <div><span>📱</span><h3>Easy Pre-Order</h3><p>Reserve online and pick up when it suits you.</p></div>
+ <div><span>📅</span><h3>Every Age Stage</h3><p>From 4-month growers to breeding pairs.</p></div></div></div></div>`;
+ if(view==='shop'){let l=P.filter(p=>(filter==='all'||p.cat===filter)&&(p.name+p.breed).toLowerCase().includes(q.toLowerCase()));
+  if(sort==='lo')l.sort((a,b)=>a.price-b.price);if(sort==='hi')l.sort((a,b)=>b.price-a.price);
+  m.innerHTML=`<div class="wrap sec"><h2>Our Chickens</h2><p class="sub">Healthy birds, grouped by age.</p>
+  <div class="tools">${[{k:'all',n:'All'},...CATS].map(c=>`<button class="chip ${filter===c.k?'on':''}" onclick="filter='${c.k}';render()">${c.n}</button>`).join('')}
+  <input id="sq" placeholder="Search breed or name…" value="${esc(q)}" oninput="q=this.value;list()"><select onchange="sort=this.value;list()"><option value="feat">Featured</option><option value="lo" ${sort==='lo'?'selected':''}>Price: low to high</option><option value="hi" ${sort==='hi'?'selected':''}>Price: high to low</option></select></div>
+  <div class="grid" id="lst"></div></div>`;list()}
+ if(view==='about')m.innerHTML=`<div class="wrap sec" style="max-width:760px"><h2>About Jasmine’s Poultry</h2><p class="sub">Breeding and supplying healthy, high-grade chickens across the Philippines.</p>
+ <div class="card" style="padding:22px;gap:10px"><h3>Our Farm Standard</h3><p>We offer starter pullets, point-of-lay layers and heritage breeding pairs. Every bird is raised on quality feed with deworming and full vaccinations.</p><p>We focus on disease resistance, strong egg output and docile temperaments suited to backyard and commercial raisers alike.</p></div></div>`;
+ if(view==='admin')adminView();
+}
+function list(){const l=P.filter(p=>(filter==='all'||p.cat===filter)&&(p.name+p.breed).toLowerCase().includes(q.toLowerCase()));
+ if(sort==='lo')l.sort((a,b)=>a.price-b.price);if(sort==='hi')l.sort((a,b)=>b.price-a.price);
+ $('#lst').innerHTML=l.length?l.map(cardH).join(''):'<p class="sub">No chickens match your search.</p>'}
+function adminView(){const tot=P.reduce((a,p)=>a+p.stock,0),val=P.reduce((a,p)=>a+p.stock*p.price,0);
+ $('#main').innerHTML=`<div class="wrap sec"><div class="row" style="flex-wrap:wrap;margin-bottom:16px"><div><h2>Inventory Dashboard</h2><p class="sub" style="margin:0">Manage listings, categories, prices and stock.</p></div>
+ <div><button class="btn b" onclick="editor()">+ Add Listing</button> <button class="btn o" onclick="admin=false;go('home')">Log out</button></div></div>
+ <div class="stats"><div class="stat"><b>${P.length}</b><span>Listings</span></div><div class="stat"><b>${tot}</b><span>Total birds in stock</span></div><div class="stat"><b>${peso(val)}</b><span>Inventory value</span></div><div class="stat"><b>${P.filter(p=>p.stock<=5).length}</b><span>Low / sold out</span></div></div>
+ <div class="tw"><table><thead><tr><th>Listing</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead><tbody>${P.map(p=>`<tr><td><b>${p.em||'🐔'} ${esc(p.name)}</b><br><small>${esc(p.breed)}</small></td><td>${cn(p.cat)}</td><td>${peso(p.price)}</td>
+ <td><input type="number" min="0" value="${p.stock}" onchange="setStock('${p.id}',this.value)"></td><td><button onclick="editor('${p.id}')">Edit</button><button class="d" onclick="del('${p.id}')">Delete</button></td></tr>`).join('')}</tbody></table></div></div>`}
+function setStock(id,v){const p=P.find(x=>x.id===id);p.stock=Math.max(0,+v||0);save();toast('Stock updated');adminView()}
+function del(id){if(confirm('Delete this listing?')){P=P.filter(p=>p.id!==id);save();adminView();toast('Listing deleted')}}
+function modal(h,side){$('#box').innerHTML=h;$('#ov').className='ov show'+(side?' side':'')}
+function closeM(){$('#ov').className='ov'}
+$('#ov').addEventListener('click',e=>{if(e.target.id==='ov')closeM()});
+function editor(id){editId=id||null;const p=P.find(x=>x.id===id)||{name:'',cat:'4',breed:'',price:'',stock:'',weight:'',desc:'',health:'Fully vaccinated',eggs:'',em:'🐔'};
+ modal(`<div class="row"><h3>${id?'Edit':'Add'} Chicken Listing</h3><button class="x" onclick="closeM()">×</button></div><form class="f" onsubmit="saveP(event)" style="margin-top:12px">
+ <div><label>Listing title</label><input name="name" required value="${esc(p.name)}"></div>
+ <div class="two"><div><label>Age category</label><select name="cat">${CATS.map(c=>`<option value="${c.k}" ${p.cat===c.k?'selected':''}>${c.n}</option>`).join('')}</select></div><div><label>Breed</label><input name="breed" required value="${esc(p.breed)}"></div></div>
+ <div class="two"><div><label>Price (₱)</label><input name="price" type="number" min="0" required value="${p.price}"></div><div><label>Stock (heads)</label><input name="stock" type="number" min="0" required value="${p.stock}"></div></div>
+ <div class="two"><div><label>Est. weight</label><input name="weight" value="${esc(p.weight)}"></div><div><label>Icon (emoji)</label><input name="em" maxlength="4" value="${esc(p.em)}"></div></div>
+ <div><label>Real chicken photo (optional)</label><input type="file" accept="image/*" onchange="photo(this)"><input type="hidden" name="img" value="${esc(p.img||'')}"><img class="pv ${p.img?'':'hide'}" id="pv" src="${p.img?esc(p.img):''}" alt=""></div>
+ <div><label>Health / vaccines</label><input name="health" value="${esc(p.health)}"></div><div><label>Egg potential</label><input name="eggs" value="${esc(p.eggs)}"></div>
+ <div><label>Description</label><textarea name="desc" rows="3">${esc(p.desc)}</textarea></div><button class="btn b" type="submit">Save Listing</button></form>`)}
+function photo(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,700/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);const u=c.toDataURL('image/jpeg',.75);document.querySelector('input[name=img]').value=u;const v=$('#pv');v.src=u;v.classList.remove('hide')};im.src=r.result};r.readAsDataURL(f)}
+function saveP(e){e.preventDefault();const d=Object.fromEntries(new FormData(e.target));d.price=+d.price;d.stock=+d.stock;
+ if(editId){P=P.map(p=>p.id===editId?{...p,...d}:p)}else P.unshift({id:'p'+Date.now(),...d});save();closeM();adminView();toast('Listing saved')}
+function detail(id){const p=P.find(x=>x.id===id);
+ modal(`<div class="pic" style="background:${COL[p.cat]};border-radius:12px;height:200px">${p.img?`<img src="${p.img}" alt="${esc(p.name)}">`:(p.em||'🐔')}</div><div class="row" style="margin-top:12px"><span class="breed">${esc(p.breed).toUpperCase()}</span><b style="color:var(--brand);font-size:20px">${peso(p.price)}</b></div>
+ <h3 style="margin:8px 0">${esc(p.name)}</h3><p style="color:var(--mut)">${esc(p.desc)}</p>
+ <div class="ci" style="display:block;line-height:1.9"><b>Age:</b> ${cn(p.cat)}<br><b>Weight:</b> ${esc(p.weight)}<br><b>Health:</b> ${esc(p.health)}<br><b>Egg potential:</b> ${esc(p.eggs)}<br><b>Availability:</b> ${stockTxt(p.stock)}</div>
+ <div class="row"><button class="btn o" onclick="closeM()">Close</button><button class="btn b" style="flex:1" ${p.stock<=0?'disabled':''} onclick="add('${p.id}');closeM()">Add to Order</button></div>`)}
+function add(id){const p=P.find(x=>x.id===id),c=cart.find(x=>x.id===id);
+ if((c?c.q:0)>=p.stock){toast('No more stock available');return}
+ c?c.q++:cart.push({id,q:1});toast('Added '+p.name);$('#cc').textContent=cart.reduce((a,c)=>a+c.q,0)}
+function openCart(){const rows=cart.map(c=>{const p=P.find(x=>x.id===c.id);return p?{p,q:c.q}:null}).filter(Boolean),tot=rows.reduce((a,r)=>a+r.p.price*r.q,0);
+ modal(`<div class="row"><h3>Your Chicken Order</h3><button class="x" onclick="closeM()">×</button></div><div style="flex:1;overflow:auto;margin:14px 0">${rows.length?rows.map(({p,q})=>`<div class="ci"><span class="t">${p.em||'🐔'}</span><div style="flex:1"><b style="font-size:13px">${esc(p.name)}</b><br><small>${peso(p.price*q)}</small></div><div class="qty"><button onclick="qty('${p.id}',-1)">−</button>${q}<button onclick="qty('${p.id}',1)">+</button></div></div>`).join(''):'<p class="sub" style="text-align:center;padding:40px 0">Your cart is empty</p>'}</div>
+ ${rows.length?`<div class="f"><div class="row"><b>Total</b><b style="color:var(--brand)">${peso(tot)}</b></div><form class="f" onsubmit="order(event)"><input name="n" required placeholder="Your name"><input name="ph" required placeholder="Mobile number"><button class="btn b" type="submit">Confirm Pre-Order</button></form></div>`:''}`,true)}
+function qty(id,d){const c=cart.find(x=>x.id===id),p=P.find(x=>x.id===id);c.q+=d;if(c.q>p.stock){c.q=p.stock;toast('Stock limit reached')}if(c.q<=0)cart=cart.filter(x=>x.id!==id);openCart();render()}
+function order(e){e.preventDefault();cart.forEach(c=>{const p=P.find(x=>x.id===c.id);if(p)p.stock=Math.max(0,p.stock-c.q)});save();cart=[];closeM();render();toast('Pre-order submitted! We’ll contact you to confirm pickup.')}
+render();
+</script>
+</body>
+</html>
